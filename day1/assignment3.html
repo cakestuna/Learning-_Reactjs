@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic List Rendering</title>
+</head>
+<body>
+  <div id="root"></div>
+  <script src="https://www.unpkg.com/react@18.2.0/umd/react.development.js"></script>
+  <script src="https://www.unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    // Your ItemList component code will go here
+
+    function Gallery({ children }) {
+  return (
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gridGap: '20px' }}>
+      {React.Children.map(children, child => (
+        <div style={{ border: '1px solid #ccc', padding: '10px' }}>
+          {child}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+<Gallery>
+
+  <img src="https://images.unsplash.com/photo-1715550722304-b6ee97071817?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzfHx8ZW58MHx8fHx8" />
+  <img src="https://images.unsplash.com/photo-1715550722304-b6ee97071817?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzfHx8ZW58MHx8fHx8" />
+</Gallery>
+
+
+    let rootElemet = ReactDOM.createRoot(document.getElementById("root"))
+    rootElemet.render(<Gallery />)
+  </script>
+</body>
+</html>
+
