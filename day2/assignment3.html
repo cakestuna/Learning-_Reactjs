@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -38,14 +39,14 @@
       const [showScore, setShowScore] = React.useState(false);
       const [score, setScore] = React.useState(0);
 
-      const handleAnswerSelected = (questionId, selectedOption) => {
+      function handleAnswerSelected(questionId, selectedOption){
         setSelectedAnswers({
           ...selectedAnswers,
           [questionId]: selectedOption,
         });
       };
 
-      const calculateScore = () => {
+    function calculateScore(){
         let newScore = 0;
         questions.forEach((question) => {
           if (selectedAnswers[question.id] === question.correctAnswer) {
@@ -56,7 +57,7 @@
         setShowScore(true);
       };
 
-      const restartQuiz = () => {
+      function restartQuiz (){
         setSelectedAnswers({});
         setShowScore(false);
         setScore(0);

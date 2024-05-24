@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ToDo List</title>
+  <style>
+    /* Basic CSS styling */
+    .todo-container {
+      max-width: 400px;
+      margin: auto;
+    }
+    .todo-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 5px;
+    }
+    .todo-item.completed {
+      text-decoration: line-through;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <script type="text/babel">
+    function ToDoList() {
+      const [todos, setTodos] = React.useState([]);
+      const [inputValue, setInputValue] = React.useState('');
+
+      // Function to handle form submission
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        if (inputValue.trim() !== '') {
+          setTodos([...todos, { id: Date.now(), text: inputValue, completed: false }]);
+          setInputValue('');
+        }
+      };
+
+      // Function to handle deletion of a todo item
+      const handleDelete = (id) => {
+        setTodos(todos.filter(todo => todo.id !== id));
+      };
+
+      // Function to handle toggling completion status of a todo item
+      const handleToggleComplete = (id) => {
+        setTodos(todos.map(todo => {
+          if (todo.id === id) {
+            return { ...todo, completed: !todo.completed };
+          }
+          return todo;
+        }));
+      };
+
+      return (
+        <div className="todo-container">
+          <h2>To Do List</h2>
+          <form onSubmit={handleSubmit}>
+            <input 
+              type="text" 
+              placeholder="Add new todo" 
+              value={inputValue} 
+              onChange={(e) => setInputValue(e.target.value)} 
+            />
+            <button type="submit">Add</button>
+          </form>
+          <ul>
+            {todos.map(todo => (
+              <li key={todo.id} className={`todo-item ${todo.completed ? 'completed' : ''}`}>
+                <input 
+                  type="checkbox" 
+                  checked={todo.completed} 
+                  onChange={() => handleToggleComplete(todo.id)} 
+                />
+                <span>{todo.text}</span>
+                <button onClick={() => handleDelete(todo.id)}>Delete</button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      );
+    }
+
+    // Render the ToDoList component to the DOM
+    ReactDOM.render(<ToDoList />, document.getElementById('root'));
+  </script>
+</body>
+</html>
